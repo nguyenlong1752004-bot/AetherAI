@@ -1,0 +1,6 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AetherAI Admin</title><link rel="stylesheet" href="/style.css"></head>
+<body><header class="nav"><a class="brand" href="/">Aether<span>AI</span></a><span style="color:#9aabc0">Admin</span></header>
+<main class="section"><div class="modal-box" style="margin:auto;max-width:900px"><h2>Quản trị</h2><label>ADMIN_KEY<input id="key" type="password"></label><button class="primary" onclick="load()">Đăng nhập</button><div id="out"></div></div></main>
+<script>
+async function load(){const key=document.getElementById("key").value;const h={"X-Admin-Key":key};const [a,b]=await Promise.all([fetch("/api/admin/orders",{headers:h}),fetch("/api/admin/stock",{headers:h})]);if(!a.ok)return document.getElementById("out").innerHTML="<p>ADMIN_KEY không đúng.</p>";const orders=await a.json(),stock=await b.json();document.getElementById("out").innerHTML=`<h3>Kho</h3>${stock.map(x=>`<p>${x.name}: <b>${x.stock}</b></p>`).join("")}<h3>Đơn hàng</h3>${orders.reverse().map(o=>`<div class="cart-row"><span><b>${o.id}</b> · ${o.productName}<br><small>${o.customerEmail}</small></span><b>${o.status}</b></div>`).join("")}`;}
+</script></body></html>

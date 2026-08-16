@@ -1,287 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AetherAI - nền tảng AI hiện đại">
-  <title>AetherAI — AI Workspace</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AetherAI — AI Store</title>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div id="toast-container"></div>
+<header class="nav">
+  <a class="brand" href="/">Aether<span>AI</span></a>
+  <nav>
+    <a href="#products">Sản phẩm</a>
+    <a href="#how">Hướng dẫn</a>
+    <a href="#support">Hỗ trợ</a>
+  </nav>
+  <button class="cart-btn" onclick="openCart()">🛒 Giỏ hàng <b id="cartCount">0</b></button>
+</header>
 
-  <div class="app-shell">
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="brand-mark">A</div>
-        <div>
-          <strong>AetherAI</strong>
-          <span>AI Workspace</span>
-        </div>
-      </div>
-
-      <nav class="side-nav">
-        <button class="nav-item active" data-page="home"><span>⌂</span> Tổng quan</button>
-        <button class="nav-item" data-page="chat"><span>✦</span> AI Chat</button>
-        <button class="nav-item" data-page="projects"><span>▣</span> Dự án</button>
-        <button class="nav-item" data-page="analytics"><span>◫</span> Phân tích</button>
-        <button class="nav-item" data-page="notifications"><span>♢</span> Thông báo <b class="nav-badge" id="notification-badge">3</b></button>
-        <button class="nav-item" data-page="settings"><span>⚙</span> Cài đặt</button>
-      </nav>
-
-      <div class="sidebar-bottom">
-        <div class="upgrade-card">
-          <span class="mini-icon">✦</span>
-          <strong>Aether Pro</strong>
-          <p>Mở khóa nhiều tính năng AI hơn.</p>
-          <button class="small-primary" id="upgrade-btn">Nâng cấp</button>
-        </div>
-
-        <button class="user-mini" id="profile-btn">
-          <div class="avatar" id="sidebar-avatar">A</div>
-          <div class="user-mini-text">
-            <strong id="sidebar-name">Khách</strong>
-            <span id="sidebar-email">Chưa đăng nhập</span>
-          </div>
-          <span>⋯</span>
-        </button>
-      </div>
-    </aside>
-
-    <main class="main">
-      <header class="topbar">
-        <button class="mobile-menu" id="mobile-menu">☰</button>
-        <div class="breadcrumb" id="breadcrumb">Tổng quan</div>
-        <div class="top-actions">
-          <button class="icon-btn" id="theme-btn" title="Đổi giao diện">☾</button>
-          <button class="icon-btn notification-trigger" data-page="notifications" title="Thông báo">♢<i></i></button>
-          <button class="top-user" id="top-user">Đăng nhập</button>
-        </div>
-      </header>
-
-      <div class="content">
-
-        <!-- HOME -->
-        <section class="page active" id="page-home">
-          <div class="hero-panel">
-            <div class="hero-copy">
-              <span class="eyebrow">AETHERAI • AI WORKSPACE</span>
-              <h1>Biến ý tưởng thành <span>kết quả.</span></h1>
-              <p>Một không gian AI hiện đại để trò chuyện, tạo nội dung, quản lý dự án và theo dõi công việc trong một nơi.</p>
-              <div class="hero-actions">
-                <button class="primary-btn" data-page="chat">Bắt đầu với AI <span>→</span></button>
-                <button class="ghost-btn" data-page="projects">Xem dự án</button>
-              </div>
-              <div class="trust-row">
-                <span>● Sẵn sàng 24/7</span>
-                <span>● Giao diện đa thiết bị</span>
-                <span>● Workspace cá nhân</span>
-              </div>
-            </div>
-            <div class="orb-wrap">
-              <div class="orb">
-                <div class="orb-core">✦</div>
-                <span class="orb-dot dot-1"></span>
-                <span class="orb-dot dot-2"></span>
-                <span class="orb-dot dot-3"></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="section-heading">
-            <div><span class="eyebrow">WORKSPACE</span><h2>Mọi thứ ở một nơi</h2></div>
-            <button class="text-btn" data-page="chat">Mở AI Chat →</button>
-          </div>
-
-          <div class="feature-grid">
-            <article class="feature-card">
-              <div class="feature-icon purple">✦</div><h3>AI Chat</h3>
-              <p>Trò chuyện với trợ lý AI và lưu lại các phiên làm việc.</p>
-              <button class="card-link" data-page="chat">Mở Chat →</button>
-            </article>
-            <article class="feature-card">
-              <div class="feature-icon blue">▣</div><h3>Quản lý dự án</h3>
-              <p>Tạo dự án, theo dõi tiến độ và tổ chức ý tưởng.</p>
-              <button class="card-link" data-page="projects">Quản lý →</button>
-            </article>
-            <article class="feature-card">
-              <div class="feature-icon green">◫</div><h3>Phân tích</h3>
-              <p>Xem các chỉ số hoạt động và mức sử dụng workspace.</p>
-              <button class="card-link" data-page="analytics">Xem số liệu →</button>
-            </article>
-            <article class="feature-card">
-              <div class="feature-icon orange">⚡</div><h3>Tự động hóa</h3>
-              <p>Chuẩn bị sẵn quy trình để tự động hóa các tác vụ lặp lại.</p>
-              <button class="card-link" id="automation-btn">Khám phá →</button>
-            </article>
-          </div>
-
-          <div class="two-col">
-            <div class="panel">
-              <div class="panel-head"><div><h3>Hoạt động gần đây</h3><p>Các hoạt động mới nhất của workspace</p></div><button class="text-btn" data-page="notifications">Tất cả</button></div>
-              <div id="activity-list" class="activity-list"></div>
-            </div>
-            <div class="panel usage-panel">
-              <div class="panel-head"><div><h3>Sử dụng tháng này</h3><p>Gói miễn phí</p></div><span class="pill">Free</span></div>
-              <div class="usage-number"><strong id="usage-number">128</strong><span>/ 500 AI requests</span></div>
-              <div class="progress"><i id="usage-progress"></i></div>
-              <p class="muted">Còn <strong id="usage-left">372</strong> lượt AI trong chu kỳ hiện tại.</p>
-              <button class="outline-btn" id="home-upgrade">Nâng cấp gói</button>
-            </div>
-          </div>
-        </section>
-
-        <!-- CHAT -->
-        <section class="page" id="page-chat">
-          <div class="page-title">
-            <div><span class="eyebrow">AI ASSISTANT</span><h1>AI Chat</h1><p>Đặt câu hỏi, phát triển ý tưởng và làm việc cùng AI.</p></div>
-            <button class="outline-btn" id="new-chat">＋ Cuộc trò chuyện mới</button>
-          </div>
-          <div class="chat-layout">
-            <aside class="chat-history panel">
-              <div class="panel-head"><h3>Lịch sử</h3><button class="icon-btn" id="clear-chat">⌫</button></div>
-              <div id="chat-history-list"></div>
-            </aside>
-            <div class="chat-window panel">
-              <div class="chat-header"><div><strong>Aether Assistant</strong><span>● Online</span></div><button class="icon-btn" id="chat-info">ⓘ</button></div>
-              <div class="messages" id="messages"></div>
-              <div class="suggestions">
-                <button>Viết một kế hoạch dự án AI</button>
-                <button>Giải thích AI thật dễ hiểu</button>
-                <button>Cho tôi 5 ý tưởng startup</button>
-              </div>
-              <form class="chat-input" id="chat-form">
-                <textarea id="chat-input" rows="1" placeholder="Nhập câu hỏi cho Aether..."></textarea>
-                <button class="send-btn" type="submit">↑</button>
-              </form>
-              <small class="chat-disclaimer">AetherAI có thể đưa ra thông tin chưa chính xác. Hãy kiểm tra các thông tin quan trọng.</small>
-            </div>
-          </div>
-        </section>
-
-        <!-- PROJECTS -->
-        <section class="page" id="page-projects">
-          <div class="page-title">
-            <div><span class="eyebrow">WORKSPACE</span><h1>Dự án</h1><p>Quản lý các ý tưởng và công việc của bạn.</p></div>
-            <button class="primary-btn" id="new-project">＋ Tạo dự án</button>
-          </div>
-          <div class="project-toolbar">
-            <div class="search-box"><span>⌕</span><input id="project-search" placeholder="Tìm dự án..."></div>
-            <select id="project-filter"><option value="all">Tất cả</option><option value="active">Đang làm</option><option value="done">Hoàn thành</option></select>
-          </div>
-          <div class="project-grid" id="project-grid"></div>
-        </section>
-
-        <!-- ANALYTICS -->
-        <section class="page" id="page-analytics">
-          <div class="page-title"><div><span class="eyebrow">INSIGHTS</span><h1>Phân tích</h1><p>Theo dõi hoạt động của workspace.</p></div><button class="outline-btn" id="export-btn">↓ Xuất báo cáo</button></div>
-          <div class="stats-grid">
-            <div class="stat-card"><span>AI requests</span><strong>128</strong><small>↑ 18.4% so với tháng trước</small></div>
-            <div class="stat-card"><span>Thời gian làm việc</span><strong>24.6h</strong><small>↑ 8.2% so với tháng trước</small></div>
-            <div class="stat-card"><span>Dự án</span><strong id="analytics-projects">3</strong><small>1 dự án hoàn thành</small></div>
-            <div class="stat-card"><span>Tỷ lệ hoàn thành</span><strong>78%</strong><small>↑ 5.1% so với tháng trước</small></div>
-          </div>
-          <div class="two-col analytics-cols">
-            <div class="panel chart-panel"><div class="panel-head"><div><h3>AI requests</h3><p>7 ngày gần nhất</p></div><span class="pill">Tuần này</span></div><div class="bar-chart" id="bar-chart"></div></div>
-            <div class="panel"><div class="panel-head"><div><h3>Phân bổ sử dụng</h3><p>Theo loại tác vụ</p></div></div><div class="donut-wrap"><div class="donut"><span>128<br><small>requests</small></span></div><div class="legend"><span><i></i> Chat 52%</span><span><i></i> Viết 28%</span><span><i></i> Phân tích 12%</span><span><i></i> Khác 8%</span></div></div></div>
-          </div>
-        </section>
-
-        <!-- NOTIFICATIONS -->
-        <section class="page" id="page-notifications">
-          <div class="page-title"><div><span class="eyebrow">INBOX</span><h1>Thông báo</h1><p>Cập nhật mới từ workspace.</p></div><button class="outline-btn" id="mark-read">Đánh dấu đã đọc</button></div>
-          <div class="panel notification-list" id="notification-list"></div>
-        </section>
-
-        <!-- SETTINGS -->
-        <section class="page" id="page-settings">
-          <div class="page-title"><div><span class="eyebrow">PREFERENCES</span><h1>Cài đặt</h1><p>Quản lý tài khoản và trải nghiệm AetherAI.</p></div></div>
-          <div class="settings-layout">
-            <div class="settings-menu">
-              <button class="settings-tab active" data-tab="account">Tài khoản</button>
-              <button class="settings-tab" data-tab="appearance">Giao diện</button>
-              <button class="settings-tab" data-tab="notifications-settings">Thông báo</button>
-              <button class="settings-tab" data-tab="security">Bảo mật</button>
-            </div>
-            <div class="panel settings-content">
-              <div class="settings-pane active" id="tab-account">
-                <h3>Thông tin tài khoản</h3><p class="muted">Thông tin hiển thị trong workspace.</p>
-                <label>Tên hiển thị<input class="field" id="settings-name"></label>
-                <label>Email<input class="field" id="settings-email" disabled></label>
-                <button class="primary-btn" id="save-profile">Lưu thay đổi</button>
-              </div>
-              <div class="settings-pane" id="tab-appearance">
-                <h3>Giao diện</h3><p class="muted">Chọn giao diện bạn muốn sử dụng.</p>
-                <div class="choice-row"><button class="choice" data-theme-choice="light">☀ Sáng</button><button class="choice" data-theme-choice="dark">☾ Tối</button></div>
-              </div>
-              <div class="settings-pane" id="tab-notifications-settings">
-                <h3>Thông báo</h3><p class="muted">Tùy chỉnh cách AetherAI gửi thông báo.</p>
-                <label class="toggle-row">Thông báo trong ứng dụng <input type="checkbox" checked></label>
-                <label class="toggle-row">Cập nhật dự án <input type="checkbox" checked></label>
-                <label class="toggle-row">Tin tức sản phẩm <input type="checkbox"></label>
-              </div>
-              <div class="settings-pane" id="tab-security">
-                <h3>Bảo mật</h3><p class="muted">Các tùy chọn bảo mật cơ bản.</p>
-                <div class="security-note">🔒 <div><strong>Phiên đăng nhập hiện tại</strong><p>Thiết bị này đang được ghi nhớ. Đây là bản frontend demo.</p></div></div>
-                <button class="outline-btn" id="logout-settings">Đăng xuất</button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- PROFILE -->
-        <section class="page" id="page-profile">
-          <div class="page-title"><div><span class="eyebrow">ACCOUNT</span><h1>Hồ sơ</h1><p>Thông tin cá nhân của bạn.</p></div></div>
-          <div class="profile-card panel">
-            <div class="big-avatar" id="profile-avatar">A</div>
-            <h2 id="profile-name">Khách</h2>
-            <p id="profile-email" class="muted">Chưa đăng nhập</p>
-            <div class="profile-actions"><button class="primary-btn" data-page="settings">Chỉnh sửa hồ sơ</button><button class="outline-btn" id="profile-logout">Đăng xuất</button></div>
-          </div>
-        </section>
-
-      </div>
-    </main>
+<main>
+<section class="hero">
+  <div>
+    <div class="eyebrow">AI DIGITAL STORE</div>
+    <h1>Công cụ AI cho<br><span>công việc của bạn.</span></h1>
+    <p>Mua sản phẩm số, thanh toán bằng chuyển khoản và nhận mã tự động sau khi hệ thống xác nhận giao dịch.</p>
+    <a class="primary" href="#products">Khám phá sản phẩm →</a>
   </div>
-
-  <!-- AUTH MODAL -->
-  <div class="modal" id="auth-modal">
-    <div class="modal-card">
-      <button class="modal-close" data-close>×</button>
-      <div class="auth-brand"><div class="brand-mark">A</div><strong>AetherAI</strong></div>
-      <div class="auth-tabs"><button class="auth-tab active" data-auth="login">Đăng nhập</button><button class="auth-tab" data-auth="register">Tạo tài khoản</button></div>
-      <form id="login-form" class="auth-form">
-        <h2>Chào mừng trở lại</h2><p class="muted">Đăng nhập để tiếp tục workspace.</p>
-        <label>Email<input class="field" id="login-email" type="email" required placeholder="you@example.com"></label>
-        <label>Mật khẩu<input class="field" id="login-password" type="password" required placeholder="••••••••"></label>
-        <button class="primary-btn full" type="submit">Đăng nhập</button>
-        <button class="link-btn" type="button" id="demo-login">Dùng tài khoản demo</button>
-      </form>
-      <form id="register-form" class="auth-form hidden">
-        <h2>Tạo tài khoản</h2><p class="muted">Bắt đầu workspace của bạn miễn phí.</p>
-        <label>Tên hiển thị<input class="field" id="register-name" required placeholder="Nguyễn Văn A"></label>
-        <label>Email<input class="field" id="register-email" type="email" required placeholder="you@example.com"></label>
-        <label>Mật khẩu<input class="field" id="register-password" type="password" minlength="6" required placeholder="Tối thiểu 6 ký tự"></label>
-        <button class="primary-btn full" type="submit">Tạo tài khoản</button>
-      </form>
-      <small class="auth-note">Bản này chạy hoàn toàn phía trình duyệt. Không dùng để lưu mật khẩu thật.</small>
-    </div>
+  <div class="hero-card">
+    <div class="orb">✦</div>
+    <strong>AetherAI</strong>
+    <small>Intelligent workspace</small>
   </div>
+</section>
 
-  <!-- PROJECT MODAL -->
-  <div class="modal" id="project-modal">
-    <div class="modal-card">
-      <button class="modal-close" data-close>×</button>
-      <h2>Tạo dự án mới</h2><p class="muted">Tạo một workspace nhỏ cho ý tưởng của bạn.</p>
-      <form id="project-form" class="auth-form">
-        <label>Tên dự án<input class="field" id="project-name" required placeholder="Ví dụ: Aether Marketing"></label>
-        <label>Mô tả<textarea class="field textarea" id="project-desc" required placeholder="Mục tiêu của dự án..."></textarea></label>
-        <label>Trạng thái<select class="field" id="project-status"><option value="active">Đang làm</option><option value="done">Hoàn thành</option></select></label>
-        <button class="primary-btn full" type="submit">Tạo dự án</button>
-      </form>
-    </div>
+<section id="products" class="section">
+  <div class="section-head"><div><div class="eyebrow">STORE</div><h2>Sản phẩm nổi bật</h2></div><span id="stockInfo"></span></div>
+  <div id="productsGrid" class="grid"></div>
+</section>
+
+<section id="how" class="section soft">
+  <div class="eyebrow">HOW IT WORKS</div><h2>Mua hàng trong 3 bước</h2>
+  <div class="steps">
+    <div><b>01</b><h3>Chọn sản phẩm</h3><p>Chọn gói AI phù hợp và nhập email nhận hàng.</p></div>
+    <div><b>02</b><h3>Chuyển khoản</h3><p>Website tạo mã đơn riêng để bạn ghi vào nội dung chuyển khoản.</p></div>
+    <div><b>03</b><h3>Nhận hàng</h3><p>Sau khi webhook xác nhận tiền vào, hệ thống tự động giao sản phẩm số.</p></div>
   </div>
+</section>
 
-  <script src="script.js"></script>
+<section id="support" class="section">
+  <div class="support"><div><div class="eyebrow">SUPPORT</div><h2>Cần hỗ trợ?</h2><p>Kiểm tra trạng thái đơn hàng bằng mã đơn sau khi thanh toán.</p></div><a class="secondary" href="/status.html">Kiểm tra đơn →</a></div>
+</section>
+</main>
+
+<footer>AetherAI © 2026 · Digital products</footer>
+
+<div id="cartModal" class="modal hidden">
+ <div class="modal-box">
+  <button class="close" onclick="closeCart()">×</button>
+  <h2>Giỏ hàng</h2><div id="cartItems"></div>
+  <div class="cart-total">Tổng: <strong id="cartTotal">0đ</strong></div>
+  <button class="primary full" onclick="checkout()">Thanh toán</button>
+ </div>
+</div>
+
+<div id="checkoutModal" class="modal hidden">
+ <div class="modal-box">
+  <button class="close" onclick="closeCheckout()">×</button>
+  <h2>Thông tin nhận hàng</h2>
+  <form id="checkoutForm">
+   <label>Họ tên<input id="customerName" required maxlength="100"></label>
+   <label>Email nhận hàng<input id="customerEmail" type="email" required maxlength="160"></label>
+   <button class="primary full">Tạo đơn hàng</button>
+  </form>
+ </div>
+</div>
+<script src="/app.js"></script>
 </body>
 </html>

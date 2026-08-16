@@ -1,0 +1,14 @@
+{
+  "name": "aetherai-shop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AetherAI digital AI products shop with VietQR/SePay payment verification and automatic digital delivery.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

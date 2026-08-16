@@ -1,0 +1,24 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Thanh toán — AetherAI</title><link rel="stylesheet" href="/style.css"></head>
+<body><header class="nav"><a class="brand" href="/">Aether<span>AI</span></a></header>
+<main class="section"><div class="modal-box" style="margin:auto">
+<div class="eyebrow">CHECKOUT</div><h2>Thanh toán đơn hàng</h2><p id="orderText" class="support p">Đang tải...</p>
+<div id="payBox"></div><div id="status"></div>
+</div></main>
+<script>
+const q=new URLSearchParams(location.search), id=q.get("order");
+const fmt=n=>new Intl.NumberFormat("vi-VN",{style:"currency",currency:"VND"}).format(n);
+async function init(){
+ const [cfg,ord]=await Promise.all([fetch("/api/config").then(r=>r.json()),fetch("/api/orders/"+id).then(r=>r.json())]);
+ if(ord.error)return document.getElementById("orderText").textContent=ord.error;
+ document.getElementById("orderText").innerHTML=`Mã đơn <b>${ord.id}</b><br>Sản phẩm: <b>${ord.productName}</b><br>Số tiền: <b>${fmt(ord.amount)}</b>`;
+ const qr=`https://img.vietqr.io/image/${encodeURIComponent(cfg.bankName)}-${encodeURIComponent(cfg.bankAccountNumber)}-compact2.png?amount=${ord.amount}&addInfo=${encodeURIComponent(ord.id)}&accountName=${encodeURIComponent(cfg.bankAccountName)}`;
+ document.getElementById("payBox").innerHTML=`<div style="text-align:center"><img src="${qr}" alt="VietQR" style="width:min(360px,100%);border-radius:14px;background:white"><p><b>${cfg.bankName}</b><br>${cfg.bankAccountName}<br>Số TK: <b>${cfg.bankAccountNumber||"Chưa cấu hình"}</b><br>Nội dung: <b>${ord.id}</b></p></div>`;
+ poll();
+}
+async function poll(){
+ const o=await fetch("/api/orders/"+id).then(r=>r.json());
+ document.getElementById("status").innerHTML=o.status==="PAID"?`<div class="support"><div><h3>Thanh toán thành công 🎉</h3><p>Mã giao hàng: <b>${o.delivery.value}</b></p></div></div>`:`<p style="color:#9aabc0">⏳ Đang chờ hệ thống xác nhận giao dịch...</p>`;
+ if(o.status!=="PAID")setTimeout(poll,5000);
+}
+init();
+</script></body></html>

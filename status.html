@@ -1,0 +1,7 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tra cứu đơn — AetherAI</title><link rel="stylesheet" href="/style.css"></head>
+<body><header class="nav"><a class="brand" href="/">Aether<span>AI</span></a></header>
+<main class="section"><div class="modal-box" style="margin:auto"><div class="eyebrow">ORDER STATUS</div><h2>Tra cứu đơn hàng</h2><label>Mã đơn<input id="id" placeholder="AET..."></label><button class="primary full" onclick="check()">Kiểm tra</button><div id="out"></div></div></main>
+<script>
+const fmt=n=>new Intl.NumberFormat("vi-VN",{style:"currency",currency:"VND"}).format(n);
+async function check(){const id=document.getElementById("id").value.trim();const r=await fetch("/api/orders/"+encodeURIComponent(id));const o=await r.json();document.getElementById("out").innerHTML=r.ok?`<div class="support" style="margin-top:20px"><div><h3>${o.productName}</h3><p>${fmt(o.amount)} · <b>${o.status}</b></p>${o.delivery?`<p>Mã giao hàng: <b>${o.delivery.value}</b></p>`:""}</div></div>`:`<p>${o.error}</p>`}
+</script></body></html>
