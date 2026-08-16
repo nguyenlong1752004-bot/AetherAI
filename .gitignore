@@ -1,6 +1,6 @@
 node_modules/
 .env
-data/orders.json
-data/inventory/*.json
+.env.*
+!.env.example
 *.log
 .DS_Store

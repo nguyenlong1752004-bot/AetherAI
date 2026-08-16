@@ -1,24 +1,26 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Thanh toán — AetherAI</title><link rel="stylesheet" href="/style.css"></head>
-<body><header class="nav"><a class="brand" href="/">Aether<span>AI</span></a></header>
-<main class="section"><div class="modal-box" style="margin:auto">
-<div class="eyebrow">CHECKOUT</div><h2>Thanh toán đơn hàng</h2><p id="orderText" class="support p">Đang tải...</p>
-<div id="payBox"></div><div id="status"></div>
-</div></main>
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AetherAI — Thanh toán</title><link rel="stylesheet" href="./style.css"></head>
+<body>
+<header class="site-header"><a class="brand" href="./index.html"><span class="brand-mark">✦</span><span><b>AetherAI</b><small>AI DIGITAL STORE</small></span></a><a class="ghost-btn" href="./index.html">← Quay lại cửa hàng</a></header>
+<main class="section" style="max-width:900px">
+ <span class="eyebrow">CHECKOUT</span><h1>Thanh toán đơn hàng</h1><p style="color:var(--muted)">Kiểm tra thông tin trước khi tạo đơn. Không đặt thông tin bí mật vào mã nguồn public.</p>
+ <div id="checkout" style="margin-top:25px"></div>
+</main>
 <script>
-const q=new URLSearchParams(location.search), id=q.get("order");
-const fmt=n=>new Intl.NumberFormat("vi-VN",{style:"currency",currency:"VND"}).format(n);
-async function init(){
- const [cfg,ord]=await Promise.all([fetch("/api/config").then(r=>r.json()),fetch("/api/orders/"+id).then(r=>r.json())]);
- if(ord.error)return document.getElementById("orderText").textContent=ord.error;
- document.getElementById("orderText").innerHTML=`Mã đơn <b>${ord.id}</b><br>Sản phẩm: <b>${ord.productName}</b><br>Số tiền: <b>${fmt(ord.amount)}</b>`;
- const qr=`https://img.vietqr.io/image/${encodeURIComponent(cfg.bankName)}-${encodeURIComponent(cfg.bankAccountNumber)}-compact2.png?amount=${ord.amount}&addInfo=${encodeURIComponent(ord.id)}&accountName=${encodeURIComponent(cfg.bankAccountName)}`;
- document.getElementById("payBox").innerHTML=`<div style="text-align:center"><img src="${qr}" alt="VietQR" style="width:min(360px,100%);border-radius:14px;background:white"><p><b>${cfg.bankName}</b><br>${cfg.bankAccountName}<br>Số TK: <b>${cfg.bankAccountNumber||"Chưa cấu hình"}</b><br>Nội dung: <b>${ord.id}</b></p></div>`;
- poll();
-}
-async function poll(){
- const o=await fetch("/api/orders/"+id).then(r=>r.json());
- document.getElementById("status").innerHTML=o.status==="PAID"?`<div class="support"><div><h3>Thanh toán thành công 🎉</h3><p>Mã giao hàng: <b>${o.delivery.value}</b></p></div></div>`:`<p style="color:#9aabc0">⏳ Đang chờ hệ thống xác nhận giao dịch...</p>`;
- if(o.status!=="PAID")setTimeout(poll,5000);
-}
-init();
-</script></body></html>
+const PRODUCTS={starter:{name:"AI Starter",price:99000},pro:{name:"AI Pro",price:199000},business:{name:"AI Business",price:399000}};
+const money=n=>new Intl.NumberFormat("vi-VN",{style:"currency",currency:"VND",maximumFractionDigits:0}).format(n);
+const qs=new URLSearchParams(location.search);let items=[];try{items=JSON.parse(decodeURIComponent(qs.get("items")||"[]"))}catch{}
+const total=items.reduce((s,x)=>s+(PRODUCTS[x.id]?.price||0)*x.qty,0);
+const email=qs.get("email")||"";
+document.querySelector("#checkout").innerHTML=`
+<div style="display:grid;grid-template-columns:1.2fr .8fr;gap:15px">
+ <section class="product"><h2>Đơn hàng</h2>${items.map(x=>`<p>${PRODUCTS[x.id]?.name||"Sản phẩm"} × ${x.qty} — ${money((PRODUCTS[x.id]?.price||0)*x.qty)}</p>`).join("")}<hr style="border-color:var(--border)"><h2>${money(total)}</h2></section>
+ <section class="product"><h2>Thông tin nhận hàng</h2><label>Email<input id="email" type="email" value="${email.replaceAll('"','&quot;')}" placeholder="you@example.com"></label><label style="display:block;margin-top:12px">Phương thức<select id="method" style="display:block;width:100%;padding:11px;margin-top:6px;background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:8px"><option>Chuyển khoản ngân hàng</option><option>Thanh toán online (cấu hình backend)</option></select></label><div style="margin:18px 0;padding:15px;background:var(--panel2);border-radius:10px"><b>Thông tin thanh toán</b><p style="color:var(--muted);font-size:11px">Bản public này dùng placeholder. Hãy cấu hình thông tin ngân hàng trong backend/biến môi trường trước khi nhận tiền thật.</p><code>BANK_NAME=YOUR_BANK<br>ACCOUNT_NUMBER=YOUR_ACCOUNT<br>ACCOUNT_NAME=YOUR_NAME</code></div><button class="primary-btn full" id="create">Tạo đơn hàng</button></section>
+</div>`;
+document.querySelector("#create").onclick=()=>{
+ const em=document.querySelector("#email").value.trim();if(!em)return alert("Nhập email nhận hàng.");
+ const order={id:"AET-"+Date.now().toString(36).toUpperCase(),email:em,total,items,createdAt:new Date().toISOString(),status:"pending"};
+ localStorage.setItem("aether_last_order",JSON.stringify(order));location.href="./status.html?order="+encodeURIComponent(order.id);
+};
+</script>
+</body></html>

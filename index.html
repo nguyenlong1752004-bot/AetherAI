@@ -1,78 +1,73 @@
 <!doctype html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AetherAI — AI Store</title>
-<link rel="stylesheet" href="/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="AetherAI — cửa hàng sản phẩm AI số">
+  <title>AetherAI — AI Store</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<header class="nav">
-  <a class="brand" href="/">Aether<span>AI</span></a>
+<div id="toast"></div>
+<header class="site-header">
+  <a class="brand" href="./index.html"><span class="brand-mark">✦</span><span><b>AetherAI</b><small>AI DIGITAL STORE</small></span></a>
   <nav>
-    <a href="#products">Sản phẩm</a>
-    <a href="#how">Hướng dẫn</a>
-    <a href="#support">Hỗ trợ</a>
+    <a href="#products">Sản phẩm</a><a href="#how">Hướng dẫn</a><a href="#support">Hỗ trợ</a>
   </nav>
-  <button class="cart-btn" onclick="openCart()">🛒 Giỏ hàng <b id="cartCount">0</b></button>
+  <div class="header-actions">
+    <button class="ghost-btn" id="accountBtn">Đăng nhập</button>
+    <button class="cart-btn" id="cartBtn">Giỏ hàng <span id="cartCount">0</span></button>
+  </div>
 </header>
 
 <main>
 <section class="hero">
-  <div>
-    <div class="eyebrow">AI DIGITAL STORE</div>
-    <h1>Công cụ AI cho<br><span>công việc của bạn.</span></h1>
-    <p>Mua sản phẩm số, thanh toán bằng chuyển khoản và nhận mã tự động sau khi hệ thống xác nhận giao dịch.</p>
-    <a class="primary" href="#products">Khám phá sản phẩm →</a>
+  <div class="hero-copy">
+    <span class="eyebrow">AETHERAI • DIGITAL PRODUCTS</span>
+    <h1>Công cụ AI cho <em>công việc</em> của bạn.</h1>
+    <p>Mua sản phẩm số, xem hướng dẫn thanh toán và quản lý đơn hàng trong một giao diện gọn gàng.</p>
+    <div class="hero-actions"><a class="primary-btn" href="#products">Khám phá sản phẩm →</a><button class="secondary-btn" id="heroLogin">Tài khoản</button></div>
+    <div class="trust"><span>✓ Giao diện responsive</span><span>✓ Theo dõi đơn hàng</span><span>✓ Hỗ trợ nhanh</span></div>
   </div>
-  <div class="hero-card">
-    <div class="orb">✦</div>
-    <strong>AetherAI</strong>
-    <small>Intelligent workspace</small>
-  </div>
+  <div class="hero-orb"><div class="orb-core">✦</div><span></span><i></i><b></b></div>
 </section>
 
 <section id="products" class="section">
-  <div class="section-head"><div><div class="eyebrow">STORE</div><h2>Sản phẩm nổi bật</h2></div><span id="stockInfo"></span></div>
-  <div id="productsGrid" class="grid"></div>
+  <div class="section-head"><div><span class="eyebrow">STORE</span><h2>Sản phẩm nổi bật</h2></div><div class="search"><span>⌕</span><input id="search" placeholder="Tìm sản phẩm..."></div></div>
+  <div id="productGrid" class="product-grid"></div>
 </section>
 
-<section id="how" class="section soft">
-  <div class="eyebrow">HOW IT WORKS</div><h2>Mua hàng trong 3 bước</h2>
+<section id="how" class="section how">
+  <div class="section-head"><div><span class="eyebrow">HOW IT WORKS</span><h2>Mua hàng trong 3 bước</h2></div></div>
   <div class="steps">
-    <div><b>01</b><h3>Chọn sản phẩm</h3><p>Chọn gói AI phù hợp và nhập email nhận hàng.</p></div>
-    <div><b>02</b><h3>Chuyển khoản</h3><p>Website tạo mã đơn riêng để bạn ghi vào nội dung chuyển khoản.</p></div>
-    <div><b>03</b><h3>Nhận hàng</h3><p>Sau khi webhook xác nhận tiền vào, hệ thống tự động giao sản phẩm số.</p></div>
+    <article><strong>01</strong><h3>Chọn sản phẩm</h3><p>Chọn gói AI phù hợp và thêm vào giỏ hàng.</p></article>
+    <article><strong>02</strong><h3>Thanh toán</h3><p>Điền email nhận hàng và chọn phương thức thanh toán được hỗ trợ.</p></article>
+    <article><strong>03</strong><h3>Nhận hàng</h3><p>Kiểm tra trạng thái đơn bằng mã đơn hàng. Với hệ thống thật, việc cấp sản phẩm cần được xác nhận từ backend.</p></article>
   </div>
 </section>
 
-<section id="support" class="section">
-  <div class="support"><div><div class="eyebrow">SUPPORT</div><h2>Cần hỗ trợ?</h2><p>Kiểm tra trạng thái đơn hàng bằng mã đơn sau khi thanh toán.</p></div><a class="secondary" href="/status.html">Kiểm tra đơn →</a></div>
+<section id="support" class="section support">
+  <div><span class="eyebrow">SUPPORT</span><h2>Cần hỗ trợ?</h2><p>Kiểm tra đơn hàng hoặc mở phần hướng dẫn để xem các bước tiếp theo.</p></div>
+  <div class="support-actions"><a class="secondary-btn" href="./status.html">Kiểm tra đơn →</a><a class="secondary-btn" href="mailto:support@example.com">Email hỗ trợ</a></div>
 </section>
 </main>
 
-<footer>AetherAI © 2026 · Digital products</footer>
+<footer><span>© 2026 AetherAI</span><span>Sản phẩm số • Demo store</span></footer>
 
-<div id="cartModal" class="modal hidden">
- <div class="modal-box">
-  <button class="close" onclick="closeCart()">×</button>
-  <h2>Giỏ hàng</h2><div id="cartItems"></div>
-  <div class="cart-total">Tổng: <strong id="cartTotal">0đ</strong></div>
-  <button class="primary full" onclick="checkout()">Thanh toán</button>
- </div>
-</div>
-
-<div id="checkoutModal" class="modal hidden">
- <div class="modal-box">
-  <button class="close" onclick="closeCheckout()">×</button>
-  <h2>Thông tin nhận hàng</h2>
-  <form id="checkoutForm">
-   <label>Họ tên<input id="customerName" required maxlength="100"></label>
-   <label>Email nhận hàng<input id="customerEmail" type="email" required maxlength="160"></label>
-   <button class="primary full">Tạo đơn hàng</button>
+<div class="modal" id="authModal"><div class="modal-card">
+  <button class="modal-close" data-close>×</button><div class="modal-brand">✦ AetherAI</div>
+  <div class="tabs"><button class="tab active" data-tab="login">Đăng nhập</button><button class="tab" data-tab="register">Tạo tài khoản</button></div>
+  <form id="authForm">
+    <input type="hidden" id="authMode" value="login">
+    <label>Email<input id="authEmail" type="email" required autocomplete="email"></label>
+    <label>Mật khẩu<input id="authPassword" type="password" required minlength="6" autocomplete="current-password"></label>
+    <label id="nameField" class="hidden">Họ tên<input id="authName" autocomplete="name"></label>
+    <button class="primary-btn full" type="submit" id="authSubmit">Đăng nhập</button>
   </form>
- </div>
-</div>
-<script src="/app.js"></script>
+  <small class="note">Đây là bản frontend demo. Không lưu mật khẩu thật trên GitHub Pages.</small>
+</div></div>
+
+<div class="drawer" id="cartDrawer"><div class="drawer-head"><h2>Giỏ hàng</h2><button class="modal-close" data-cart-close>×</button></div><div id="cartItems"></div><div class="cart-total"><span>Tổng</span><b id="cartTotal">0 ₫</b></div><button class="primary-btn full" id="checkoutBtn">Tiến hành thanh toán</button></div>
+<script src="./app.js" defer></script>
 </body>
 </html>

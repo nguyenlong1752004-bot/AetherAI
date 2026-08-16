@@ -1,119 +1,47 @@
-# AetherAI Shop
+# AetherAI Store — GitHub Pages Ready
 
-Website bán sản phẩm số/AI với:
+Bản này đã sửa đường dẫn tài nguyên thành đường dẫn tương đối (`./style.css`, `./app.js`) để chạy đúng khi repo được host tại:
 
-- Trang chủ + sản phẩm
-- Giỏ hàng
-- Checkout
-- VietQR chuyển khoản
-- Tự tạo mã đơn hàng
-- Kiểm tra trạng thái đơn
-- Webhook SePay để tự động xác nhận giao dịch
-- Tự động giao mã/license hoặc tài khoản hàng hóa từ kho
-- Trang admin đơn giản
-- Không lưu thông tin thẻ ngân hàng của khách
+`https://USERNAME.github.io/AetherAI/`
 
-## 1. Chạy trên máy
+## Có gì trong bản này
 
-Cài Node.js 18+.
+- Trang cửa hàng responsive
+- Sản phẩm + tìm kiếm
+- Giỏ hàng bằng LocalStorage
+- Đăng ký / đăng nhập demo
+- Trang thanh toán
+- Trang kiểm tra đơn hàng
+- Trang admin demo
+- Backend Node/Express starter
+- `.env.example` và `.gitignore`
+- Không chứa thông tin ngân hàng thật
 
-```bash
-npm install
-copy .env.example .env
-npm start
-```
+## Upload GitHub
 
-Mở:
+Upload toàn bộ file trong thư mục này vào **root** của repository, cùng cấp với `index.html`.
 
-http://localhost:3000
+Sau đó:
 
-## 2. Cấu hình ngân hàng
+1. GitHub → Settings → Pages
+2. Source: Deploy from a branch
+3. Branch: `main`
+4. Folder: `/ (root)`
+5. Save
 
-Mở `.env` và điền:
+## Quan trọng về backend và thanh toán
 
-```env
-BANK_NAME=Techcombank
-BANK_ACCOUNT_NAME=NGUYEN DINH THANH LONG
-BANK_ACCOUNT_NUMBER=...
-```
+GitHub Pages chỉ host frontend tĩnh. `server.js` không chạy trên GitHub Pages.
 
-Không đưa `.env` lên GitHub.
+Để có:
+- xác nhận thanh toán tự động,
+- webhook,
+- cấp sản phẩm tự động,
+- đăng nhập thật,
+- cơ sở dữ liệu,
 
-## 3. Tự động xác nhận thanh toán
+cần deploy backend lên một dịch vụ Node.js và cấu hình secret bằng Environment Variables.
 
-Website dùng SePay Webhook.
+Không đưa mật khẩu, API key, webhook secret hoặc file `.env` thật lên GitHub.
 
-Luồng:
-
-Khách tạo đơn
-→ website hiển thị số tiền + mã đơn
-→ khách chuyển khoản
-→ SePay gửi webhook
-→ server kiểm tra giao dịch tiền vào + mã đơn
-→ đơn chuyển PAID
-→ server lấy một item chưa bán trong kho
-→ giao item cho khách.
-
-Endpoint:
-
-POST /sepay-webhook
-
-Trong SePay Dashboard, cấu hình webhook trỏ tới:
-
-https://YOUR-BACKEND-DOMAIN/sepay-webhook
-
-Nên dùng API Key hoặc HMAC-SHA256/secret theo cấu hình của SePay.
-
-## 4. Thêm hàng vào kho
-
-Mở:
-
-data/inventory/
-
-Mỗi sản phẩm có một file JSON. Ví dụ:
-
-```json
-[
-  {
-    "id": "AI-001",
-    "type": "license",
-    "value": "LICENSE-EXAMPLE-001",
-    "used": false
-  }
-]
-```
-
-Có thể dùng `type: "account"` nếu sản phẩm của bạn là tài khoản hợp pháp do bạn sở hữu/phân phối.
-
-KHÔNG đưa mật khẩu, cookie, token quản trị hoặc API secret vào GitHub.
-
-## 5. Admin
-
-Mở:
-
-/admin.html
-
-Nhập ADMIN_KEY trong `.env`.
-
-Admin có thể:
-
-- xem đơn hàng
-- xem trạng thái thanh toán
-- xem hàng tồn
-- kiểm tra webhook
-
-## 6. GitHub Pages
-
-GitHub Pages chỉ host frontend tĩnh. Nó KHÔNG chạy được Node.js backend/webhook.
-
-Vì vậy:
-
-- `public/` có thể đưa lên GitHub Pages.
-- `server.js` phải chạy trên một máy chủ/backend có URL HTTPS.
-- SePay webhook phải gọi được URL backend đó.
-
-Nếu muốn tự động thanh toán + giao hàng thật, phải deploy backend riêng.
-
-## Lưu ý
-
-Đây là hệ thống mẫu cho sản phẩm số hợp pháp. Không dùng để bán tài khoản lấy từ nguồn trái phép, đánh cắp credential, hoặc vượt điều khoản dịch vụ của nhà cung cấp AI.
+Bản này cố tình để thông tin ngân hàng là placeholder. Hãy cấu hình thông tin thanh toán ở backend/hosting trước khi nhận giao dịch thật.

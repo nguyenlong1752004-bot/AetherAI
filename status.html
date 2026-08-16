@@ -1,7 +1,17 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tra cứu đơn — AetherAI</title><link rel="stylesheet" href="/style.css"></head>
-<body><header class="nav"><a class="brand" href="/">Aether<span>AI</span></a></header>
-<main class="section"><div class="modal-box" style="margin:auto"><div class="eyebrow">ORDER STATUS</div><h2>Tra cứu đơn hàng</h2><label>Mã đơn<input id="id" placeholder="AET..."></label><button class="primary full" onclick="check()">Kiểm tra</button><div id="out"></div></div></main>
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AetherAI — Trạng thái đơn</title><link rel="stylesheet" href="./style.css"></head>
+<body>
+<header class="site-header"><a class="brand" href="./index.html"><span class="brand-mark">✦</span><span><b>AetherAI</b><small>AI DIGITAL STORE</small></span></a><a class="ghost-btn" href="./index.html">← Cửa hàng</a></header>
+<main class="section" style="max-width:760px">
+<span class="eyebrow">ORDER STATUS</span><h1>Kiểm tra đơn hàng</h1>
+<div class="product" style="margin-top:25px">
+<label>Mã đơn hàng<input id="orderId" placeholder="AET-..."></label>
+<button class="primary-btn" id="check" style="margin-top:12px">Kiểm tra</button>
+<div id="result" style="margin-top:20px"></div>
+</div>
+<p style="color:var(--muted);font-size:11px;margin-top:15px">Trạng thái trên GitHub Pages là demo local. Muốn tự động xác nhận thanh toán và cấp sản phẩm cần backend + webhook thanh toán.</p>
+</main>
 <script>
-const fmt=n=>new Intl.NumberFormat("vi-VN",{style:"currency",currency:"VND"}).format(n);
-async function check(){const id=document.getElementById("id").value.trim();const r=await fetch("/api/orders/"+encodeURIComponent(id));const o=await r.json();document.getElementById("out").innerHTML=r.ok?`<div class="support" style="margin-top:20px"><div><h3>${o.productName}</h3><p>${fmt(o.amount)} · <b>${o.status}</b></p>${o.delivery?`<p>Mã giao hàng: <b>${o.delivery.value}</b></p>`:""}</div></div>`:`<p>${o.error}</p>`}
+const last=JSON.parse(localStorage.getItem("aether_last_order")||"null");const q=new URLSearchParams(location.search);if(last)document.querySelector("#orderId").value=q.get("order")||last.id;
+document.querySelector("#check").onclick=()=>{const id=document.querySelector("#orderId").value.trim(),o=JSON.parse(localStorage.getItem("aether_last_order")||"null"),r=document.querySelector("#result");if(!o||o.id!==id){r.innerHTML="<p style='color:#ff8299'>Không tìm thấy đơn trên trình duyệt này.</p>";return}r.innerHTML=`<div style="padding:18px;background:var(--panel2);border-radius:10px"><b>${o.id}</b><p>Email: ${o.email}</p><p>Tổng tiền: <b>${new Intl.NumberFormat("vi-VN",{style:"currency",currency:"VND",maximumFractionDigits:0}).format(o.total)}</b></p><p>Trạng thái: <b style="color:#f2c66d">Chờ xác nhận</b></p></div>`}
 </script></body></html>
